@@ -1,0 +1,1 @@
+export const DOMAIN = "https://infraportal.iitd.ac.in/api/";
