@@ -12,7 +12,7 @@ const Login = () => {
             navigate("/dashboard");
         }
         else {
-            navigate(`https://oauth.iitd.ac.in/authorize.php?response_type=code&client_id=${client_id}&state=xyz`);
+            window.location.href = `https://oauth.iitd.ac.in/authorize.php?response_type=code&client_id=${client_id}&state=xyz`;
         }
     }, [token, navigate]);
 
