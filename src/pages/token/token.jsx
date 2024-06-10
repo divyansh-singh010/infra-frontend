@@ -14,7 +14,7 @@ const Token = () => {
         })
             .then(res => {
                 localStorage.setItem('user', JSON.stringify(res.data.profile));
-                localStorage.setItem('access_token', token);
+                localStorage.setItem('token', token);
                 setVerified(true);
                 window.location.href = '/dashboard';
             })
