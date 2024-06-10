@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import axios from "axios";
 import { DOMAIN } from "../domain"
@@ -69,6 +68,7 @@ function App() {
         <Route path="/queries" element={<Queries isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries} />} />
         <Route path="/issue" element={<Issue isOpen={isOpen} toggleSidebar={toggleSidebar} issueFrequencyList={issue_chart_data} issue_options={issue_options} />} />
         <Route path="/room" element={<Room isOpen={isOpen} toggleSidebar={toggleSidebar} roomFrequencyList={sortedRoomFrequency} />} />
+        <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
   )

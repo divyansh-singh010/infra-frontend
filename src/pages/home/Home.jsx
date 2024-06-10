@@ -4,8 +4,15 @@ import List from "../../components/List";
 import Roomlist from "../../components/Roomlist";
 import Sidebar from "../../components/Sidebar";
 import { Chart } from "react-google-charts";
+import { useEffect } from "react";
 
 export default function Home({ isOpen, toggleSidebar, issueFrequencyList, issue_options, complexFrequencyList, complex_options, roomFrequencyList, queries }) {
+    useEffect(() => {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            window.location.href = "/";
+        }
+    }, []);
     return (
         <div className="flex min-h-screen">
             <div className={`transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'}`}>
@@ -36,13 +43,13 @@ export default function Home({ isOpen, toggleSidebar, issueFrequencyList, issue_
                     </div>
                 </div>
                 <div className="shadow-lg p-4 rounded-sm mt-4">
-                <div className="text-2xl text-sky-500 font-bold">Room Rankings</div>
-                    <Roomlist roomFrequencyList={roomFrequencyList.slice(0,10)} />
+                    <div className="text-2xl text-sky-500 font-bold">Room Rankings</div>
+                    <Roomlist roomFrequencyList={roomFrequencyList.slice(0, 10)} />
                     <Link to="/room" className="text-blue-500">View More...</Link>
                 </div>
                 <div className="shadow-lg p-4 rounded-sm mt-4">
                     <div className="text-2xl text-sky-500 font-bold">Queries</div>
-                    <List queries={queries.slice(0,10)} />
+                    <List queries={queries.slice(0, 10)} />
                     <Link to="/queries" className="text-blue-500">View More...</Link>
                 </div>
             </div>
