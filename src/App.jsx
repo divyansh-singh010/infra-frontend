@@ -9,6 +9,7 @@ import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
 import Login from './pages/login/Login'
 import { useEffect, useState } from "react";
+import Token from './pages/token/Token'
 
 function App() {
   const [isOpen, setIsOpen] = useState(true)
@@ -19,24 +20,24 @@ function App() {
   const [complexFrequencyList, setComplexFrequencyList] = useState([])
   const [issueFrequencyList, setIssueFrequencyList] = useState([])
   const [roomFrequencyList, setRoomFrequencyList] = useState([])
-    useEffect(() => {
-        console.log("Queries Fetching...");
-        axios.get(`${DOMAIN}queries/`,{
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          }
-        })
-            .then((response) => {
-                console.log(response.data);
-                setQueries(response.data.queries);
-                setComplexFrequencyList(response.data.complex_frequency);
-                setIssueFrequencyList(response.data.issue_frequency);
-                setRoomFrequencyList(response.data.room_frequency);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+  useEffect(() => {
+    console.log("Queries Fetching...");
+    axios.get(`${DOMAIN}queries/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      }
+    })
+      .then((response) => {
+        console.log(response.data);
+        setQueries(response.data.queries);
+        setComplexFrequencyList(response.data.complex_frequency);
+        setIssueFrequencyList(response.data.issue_frequency);
+        setRoomFrequencyList(response.data.room_frequency);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const sortedRoomFrequency = roomFrequencyList.sort((a, b) => b[1] - a[1]);
 
@@ -56,7 +57,7 @@ function App() {
   //   acc[query.complex_name] = (acc[query.complex_name] || 0) + 1;
   //   return acc;
   // }, {});
-  
+
   // Convert the frequency mapping to the desired format
   // const complexFrequencyList = [["Complex", "Frequency"], ...Object.entries(complexFrequency).map(([complex_name, freq]) => [complex_name, freq])];
   const complex_options = {

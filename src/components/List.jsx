@@ -70,7 +70,7 @@ async function updateStatus(id, status) {
         console.log(`Updating status for ID: ${id} to status: ${status}`);
         const response = await axios.put("https://infraportal.iitd.ac.in/api/update_status/", {
             id: id,
-            status: status
+            status: 'Completed'
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ async function updateStatus(id, status) {
 
         if (response.status === 200) {
             alert("Status updated successfully.");
-            window.location.reload();
+            // window.location.reload();
         }
     } catch (error) {
         console.log('Error:', error);
