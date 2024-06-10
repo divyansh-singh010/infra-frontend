@@ -2,8 +2,15 @@ import React from 'react';
 import Sidebar from '../../components/Sidebar';
 import Dashboard from '../../components/Dashboard';
 import { Chart } from 'react-google-charts';
+import { useEffect } from 'react';
 
-export default function Complex({complexFrequencyList, complex_options, isOpen, toggleSidebar}){
+export default function Complex({ complexFrequencyList, complex_options, isOpen, toggleSidebar }) {
+    useEffect(() => {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            window.location.href = "/";
+        }
+    }, []);
     return (
         <div className="flex min-h-screen">
             <div className={`transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'}`}>

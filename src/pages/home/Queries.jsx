@@ -7,7 +7,13 @@ import { useEffect } from "react";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function Queries({queries, isOpen, toggleSidebar}) {
+export default function Queries({ queries, isOpen, toggleSidebar }) {
+    useEffect(() => {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     const [currentPage, setCurrentPage] = useState(1);
     const queriesPerPage = 15;
     const [filteredQueries, setFilteredQueries] = useState(queries);
@@ -71,7 +77,7 @@ export default function Queries({queries, isOpen, toggleSidebar}) {
             <div className="flex-1 p-6 bg-gray-100">
                 <Dashboard />
                 <div className="shadow-lg p-4 rounded-sm">
-                <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-4">
                         <select value={statusFilter} onChange={handleStatusChange} className="border p-2 mx-2 rounded-md">
                             <option value="">All Status</option>
                             <option value="Pending">Pending</option>
@@ -86,17 +92,17 @@ export default function Queries({queries, isOpen, toggleSidebar}) {
                             <DatePicker selected={endDateFilter} onChange={handleEndDateChange} className="border p-2 rounded-md" />
                         </div>
                     </div>
-                    <List queries={currentQueries}/>
+                    <List queries={currentQueries} />
                     <div className="flex justify-between mt-4">
-                        <button 
-                            onClick={handlePreviousPage} 
+                        <button
+                            onClick={handlePreviousPage}
                             disabled={currentPage === 1}
                             className={`border p-2 mx-2 rounded-md ${currentPage === 1 ? 'bg-gray-300' : 'bg-white'}`}
                         >
                             Previous
                         </button>
-                        <button 
-                            onClick={handleNextPage} 
+                        <button
+                            onClick={handleNextPage}
                             disabled={currentPage === totalPages}
                             className={`border p-2 mx-2 rounded-md ${currentPage === totalPages ? 'bg-gray-300' : 'bg-white'}`}
                         >
