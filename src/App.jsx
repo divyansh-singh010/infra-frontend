@@ -9,10 +9,10 @@ import Queries from './pages/home/Queries'
 import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
 import Login from './pages/login/Login'
+import Token from './pages/token/Token'
 import { useEffect, useState } from "react";
 
 function App() {
-  localStorage.setItem("access_token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI4OTE5MDE1LCJpYXQiOjE3MTgwMzI2MTUsImp0aSI6ImM1NDBjZjcyZTRmNTRkNWU5YWMxYTI1MDQ2NGFmZjFjIiwidXNlcl9pZCI6OH0.5atRJF4kTimF2rVZkyasWOpmwTuBIpKg9EYraJ8tIN0")
   const [isOpen, setIsOpen] = useState(true)
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -64,6 +64,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path='/token' element={<Token />} />
       <Route path="/dashboard" element={<Home isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries} complexFrequencyList={complex_chart_data} complex_options={complex_options} issueFrequencyList={issue_chart_data} issue_options={issue_options} roomFrequencyList={sortedRoomFrequency} />} />
       <Route path="/dummy" elemnt={<Dummy isOpen={isOpen} toggleSidebar={toggleSidebar}/>} />
       <Route path="/complex" element={<Complex isOpen={isOpen} toggleSidebar={toggleSidebar} complexFrequencyList={complex_chart_data} complex_options={complex_options} />} />
