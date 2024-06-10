@@ -8,7 +8,6 @@ import Queries from './pages/home/Queries'
 import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
 import Login from './pages/login/Login'
-import Token from './pages/token/Token'
 import { useEffect, useState } from "react";
 import Token from './pages/token/token';
 
@@ -22,6 +21,7 @@ function App() {
   const [issueFrequencyList, setIssueFrequencyList] = useState([])
   const [roomFrequencyList, setRoomFrequencyList] = useState([])
     useEffect(() => {
+        console.log("Queries Fetching...");
         axios.get(`${DOMAIN}queries/`,{
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -41,10 +41,6 @@ function App() {
 
   const sortedRoomFrequency = roomFrequencyList.sort((a, b) => b[1] - a[1]);
 
-  const complex_chart_data = [["Complex", "Frequency"], ...complexFrequencyList.map(item => [item.complex_name, item.freq])];
-
-  const issue_chart_data = [["Issue", "Frequency"], ...issueFrequencyList.map(item => [item.issue, item.freq])];
-
   const issue_options = {
     title: "Issue Frequency",
     chartArea: { width: "50%" },
@@ -57,13 +53,13 @@ function App() {
     },
   };
 
-  const complexFrequency = queries.reduce((acc, query) => {
-    acc[query.complex_name] = (acc[query.complex_name] || 0) + 1;
-    return acc;
-  }, {});
-
+  // const complexFrequency = queries.reduce((acc, query) => {
+  //   acc[query.complex_name] = (acc[query.complex_name] || 0) + 1;
+  //   return acc;
+  // }, {});
+  
   // Convert the frequency mapping to the desired format
-  const complexFrequencyList = [["Complex", "Frequency"], ...Object.entries(complexFrequency).map(([complex_name, freq]) => [complex_name, freq])];
+  // const complexFrequencyList = [["Complex", "Frequency"], ...Object.entries(complexFrequency).map(([complex_name, freq]) => [complex_name, freq])];
   const complex_options = {
     title: "Complex Distribution",
     is3D: true,

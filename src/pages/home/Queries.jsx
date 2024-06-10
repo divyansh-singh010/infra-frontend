@@ -16,15 +16,12 @@ export default function Queries({queries, isOpen, toggleSidebar}) {
     const [endDateFilter, setEndDateFilter] = useState(null);
 
     useEffect(() => {
-        // Apply filters
         let filteredData = queries;
 
-        // Filter by status
         if (statusFilter) {
             filteredData = filteredData.filter(query => query.status === statusFilter);
         }
 
-        // Filter by date range
         if (startDateFilter && endDateFilter) {
             filteredData = filteredData.filter(query => {
                 const queryDate = new Date(query.date);

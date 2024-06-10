@@ -12,7 +12,7 @@ export default function Roomlist({ roomFrequencyList }) {
                 </thead>
                 <tbody className='text-center'>
                     {roomFrequencyList.map(item => (
-                        <tr  className="hover:bg-gray-100">
+                        <tr key={item.id} className="hover:bg-gray-100">
                             <td className="py-2 px-4 border-b">{item.room}</td>
                             <td className="py-2 px-4 border-b">{item.freq}</td>
                         </tr>
