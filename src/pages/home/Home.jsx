@@ -1,89 +1,51 @@
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Dashboard from "../../components/Dashboard";
 import List from "../../components/List";
+import Roomlist from "../../components/Roomlist";
 import Sidebar from "../../components/Sidebar";
-import axios from "axios";
-import { DOMAIN } from "../../../domain";
 import { Chart } from "react-google-charts";
 
-export default function Home() {
-    const [queries, setQueries] = useState([])
-    useEffect(() => {
-        axios.get(`${DOMAIN}queries/`)
-            .then((response) => {
-                console.log(response.data);
-                setQueries(response.data.queries);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
-
-    // Create frequency mapping for 'room'
-const roomFrequency = queries.reduce((acc, query) => {
-    acc[query.room] = (acc[query.room] || 0) + 1;
-    return acc;
-  }, {});
-  
-  // Convert the frequency mapping to the desired format
-  const roomFrequencyList = [["Room", "Frequency"], ...Object.entries(roomFrequency).map(([room, freq]) => [room, freq])];
-  const room_options = {
-    title: "Room Frequency",
-    chartArea: { width: "50%" },
-    hAxis: {
-      title: "Frequency",
-      minValue: 0,
-    },
-    vAxis: {
-      title: "Room",
-    },
-  };
-
-  const complexFrequency = queries.reduce((acc, query) => {
-    acc[query.complex_name] = (acc[query.complex_name] || 0) + 1;
-    return acc;
-  }, {});
-  
-  // Convert the frequency mapping to the desired format
-  const complexFrequencyList = [["Complexity", "Frequency"], ...Object.entries(complexFrequency).map(([complex_name, freq]) => [complex_name, freq])];
-  const complex_options = {
-    title: "Complexity Distribution",
-    is3D: true,
-  };
-
-
+export default function Home({ isOpen, toggleSidebar, issueFrequencyList, issue_options, complexFrequencyList, complex_options, roomFrequencyList, queries }) {
     return (
-        <div className="grid grid-cols-10">
-            <div className="col-span-2 ">
-                <Sidebar />
+        <div className="flex min-h-screen">
+            <div className={`transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'}`}>
+                <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
             </div>
-            <div className="col-span-8">
+            <div className="flex-1 p-6 bg-gray-100">
                 <Dashboard />
-                <div className="shadow-lg p-4 rounded-sm">
-                    <div className="text-2xl text-sky-500 font-bold">Welcome User!</div>
-                    <List queries={queries}/>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="shadow-lg p-4 rounded-sm">
+                        <Chart
+                            width={"100%"}
+                            height={"400px"}
+                            chartType="BarChart"
+                            loader={<div>Loading Chart</div>}
+                            data={issueFrequencyList}
+                            options={issue_options}
+                        />
+                    </div>
+                    <div className="shadow-lg p-4 rounded-sm">
+                        <Chart
+                            width={"100%"}
+                            height={"400px"}
+                            chartType="PieChart"
+                            loader={<div>Loading Chart</div>}
+                            data={complexFrequencyList}
+                            options={complex_options}
+                        />
+                    </div>
                 </div>
-                <div className="shadow-lg p-4 rounded-sm">
-                    <Chart
-                        width={"100%"}
-                        height={"400px"}
-                        chartType="BarChart"
-                        loader={<div>Loading Chart</div>}
-                        data={roomFrequencyList}
-                        options={room_options}
-                    />
+                <div className="shadow-lg p-4 rounded-sm mt-4">
+                <div className="text-2xl text-sky-500 font-bold">Room Rankings</div>
+                    <Roomlist roomFrequencyList={roomFrequencyList.slice(0,10)} />
+                    <Link to="/room" className="text-blue-500">View More...</Link>
                 </div>
-                <div className="shadow-lg p-4 rounded-sm">
-                    <Chart
-                        width={"100%"}
-                        height={"400px"}
-                        chartType="PieChart"
-                        loader={<div>Loading Chart</div>}
-                        data={complexFrequencyList}
-                        options={complex_options}
-                    />
+                <div className="shadow-lg p-4 rounded-sm mt-4">
+                    <div className="text-2xl text-sky-500 font-bold">Queries</div>
+                    <List queries={queries.slice(0,10)} />
+                    <Link to="/room" className="text-blue-500">View More...</Link>
                 </div>
             </div>
         </div>
-    )
+    );
 }
