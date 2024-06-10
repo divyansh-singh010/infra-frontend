@@ -9,7 +9,6 @@ import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
 import Login from './pages/login/Login'
 import { useEffect, useState } from "react";
-import Token from './pages/token/token';
 
 function App() {
   const [isOpen, setIsOpen] = useState(true)
