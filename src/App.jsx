@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import axios from "axios";
 import { DOMAIN } from "../domain"
@@ -10,6 +9,8 @@ import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
 import Login from './pages/login/Login'
 import { useEffect, useState } from "react";
+import Token from './pages/token/token'
+import Login from './pages/login/login'
 
 function App() {
   const [isOpen, setIsOpen] = useState(true)
@@ -69,15 +70,17 @@ const roomFrequency = queries.reduce((acc, query) => {
   };
   return (
     <BrowserRouter>
-    <Routes>
+      <Routes>
       {/* <Route path="/" element={<Login />} /> */}
-      <Route path="/" element={<Home isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries} complexFrequencyList={complexFrequencyList} complex_options={complex_options} issueFrequencyList={issueFrequencyList} issue_options={issue_options} roomFrequencyList={sortedRoomFrequency} />} />
-      <Route path="/dummy" elemnt={<Dummy isOpen={isOpen} toggleSidebar={toggleSidebar}/>} />
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Home isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries} complexFrequencyList={complexFrequencyList} complex_options={complex_options} issueFrequencyList={issueFrequencyList} issue_options={issue_options} roomFrequencyList={sortedRoomFrequency} />} />
+        <Route path="/token" element={<Token />} />
+        <Route path="/dummy" elemnt={<Dummy isOpen={isOpen} toggleSidebar={toggleSidebar}/>} />
       <Route path="/complex" element={<Complex isOpen={isOpen} toggleSidebar={toggleSidebar} complexFrequencyList={complexFrequencyList} complex_options={complex_options} />} />
        <Route path="/queries" element={<Queries isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries}/>} />
       <Route path="/issue" element={<Issue isOpen={isOpen} toggleSidebar={toggleSidebar} issueFrequencyList={issueFrequencyList} issue_options={issue_options}/>} />
       <Route path="/room" element={<Room isOpen={isOpen} toggleSidebar={toggleSidebar} roomFrequencyList={sortedRoomFrequency}/>} />
-    </Routes>
+      </Routes>
     </BrowserRouter>
   )
 }
