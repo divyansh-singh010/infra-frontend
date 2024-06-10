@@ -43,7 +43,7 @@ export default function Home({ isOpen, toggleSidebar, issueFrequencyList, issue_
                 <div className="shadow-lg p-4 rounded-sm mt-4">
                     <div className="text-2xl text-sky-500 font-bold">Queries</div>
                     <List queries={queries.slice(0,10)} />
-                    <Link to="/room" className="text-blue-500">View More...</Link>
+                    <Link to="/queries" className="text-blue-500">View More...</Link>
                 </div>
             </div>
         </div>

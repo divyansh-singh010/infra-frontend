@@ -8,6 +8,7 @@ import Queries from './pages/home/Queries'
 import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
 import Login from './pages/login/Login'
+import Token from './pages/token/Token'
 import { useEffect, useState } from "react";
 import Token from './pages/token/token';
 
@@ -17,36 +18,33 @@ function App() {
     setIsOpen(!isOpen);
   }
   const [queries, setQueries] = useState([])
-  useEffect(() => {
-    axios.get(`${DOMAIN}queries/`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        console.log(response.data);
-        setQueries(response.data.queries);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const [complexFrequencyList, setComplexFrequencyList] = useState([])
+  const [issueFrequencyList, setIssueFrequencyList] = useState([])
+  const [roomFrequencyList, setRoomFrequencyList] = useState([])
+    useEffect(() => {
+        axios.get(`${DOMAIN}queries/`,{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          }
+        })
+            .then((response) => {
+                console.log(response.data);
+                setQueries(response.data.queries);
+                setComplexFrequencyList(response.data.complex_frequency);
+                setIssueFrequencyList(response.data.issue_frequency);
+                setRoomFrequencyList(response.data.room_frequency);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
-  const roomFrequency = queries.reduce((acc, query) => {
-    acc[query.room] = (acc[query.room] || 0) + 1;
-    return acc;
-  }, {});
+  const sortedRoomFrequency = roomFrequencyList.sort((a, b) => b[1] - a[1]);
 
-  // Convert the frequency mapping to the desired format
-  const sortedRoomFrequency = Object.entries(roomFrequency).sort((a, b) => b[1] - a[1]);
+  const complex_chart_data = [["Complex", "Frequency"], ...complexFrequencyList.map(item => [item.complex_name, item.freq])];
 
-  const issueFrequency = queries.reduce((acc, query) => {
-    acc[query.issue] = (acc[query.issue] || 0) + 1;
-    return acc;
-  }, {});
+  const issue_chart_data = [["Issue", "Frequency"], ...issueFrequencyList.map(item => [item.issue, item.freq])];
 
-  // Convert the frequency mapping to the desired format
-  const issueFrequencyList = [["Issue", "Frequency"], ...Object.entries(issueFrequency).map(([issue, freq]) => [issue, freq])];
   const issue_options = {
     title: "Issue Frequency",
     chartArea: { width: "50%" },
