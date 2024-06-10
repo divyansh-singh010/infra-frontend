@@ -8,12 +8,10 @@ const Login = () => {
     const client_id = "2HEtZsBPc0gWWDph0kBijGm8uWKeHOn1";
 
     useEffect(() => {
-        if (token) {
-            console.log("Token exists");
+        if (token) {    
             navigate("/dashboard");
         }
         else {
-            console.log("Token does not exist");
             window.location.href = `https://oauth.iitd.ac.in/authorize.php?response_type=code&client_id=${client_id}&state=ios`;
         }
     }, [token, navigate]);
