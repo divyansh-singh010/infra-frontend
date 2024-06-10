@@ -1,18 +1,18 @@
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import axios from "axios";
 import { DOMAIN } from "../domain"
 import Home from './pages/home/Home'
-import Dummy from './pages/dummy/dummy'
+import Token from './pages/token/Token'
 import Complex from './pages/home/Complex'
 import Queries from './pages/home/Queries'
 import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
 import Login from './pages/login/Login'
 import { useEffect, useState } from "react";
-import Token from './pages/token/Token'
 
 function App() {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   }
@@ -21,7 +21,6 @@ function App() {
   const [issueFrequencyList, setIssueFrequencyList] = useState([])
   const [roomFrequencyList, setRoomFrequencyList] = useState([])
   useEffect(() => {
-    console.log("Queries Fetching...");
     axios.get(`${DOMAIN}queries/`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
@@ -41,6 +40,10 @@ function App() {
 
   const sortedRoomFrequency = roomFrequencyList.sort((a, b) => b[1] - a[1]);
 
+  const complex_chart_data = [["Complex", "Frequency"], ...complexFrequencyList.map(item => [item.complex_name, item.freq])];
+
+  const issue_chart_data = [["Issue", "Frequency"], ...issueFrequencyList.map(item => [item.issue, item.freq])];
+
   const issue_options = {
     title: "Issue Frequency",
     chartArea: { width: "50%" },
@@ -52,14 +55,6 @@ function App() {
       title: "Issue",
     },
   };
-
-  // const complexFrequency = queries.reduce((acc, query) => {
-  //   acc[query.complex_name] = (acc[query.complex_name] || 0) + 1;
-  //   return acc;
-  // }, {});
-
-  // Convert the frequency mapping to the desired format
-  // const complexFrequencyList = [["Complex", "Frequency"], ...Object.entries(complexFrequency).map(([complex_name, freq]) => [complex_name, freq])];
   const complex_options = {
     title: "Complex Distribution",
     is3D: true,
@@ -67,14 +62,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Login />} /> */}
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Home isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries} complexFrequencyList={complexFrequencyList} complex_options={complex_options} issueFrequencyList={issueFrequencyList} issue_options={issue_options} roomFrequencyList={sortedRoomFrequency} />} />
-        <Route path="/token" element={<Token />} />
-        <Route path="/dummy" elemnt={<Dummy isOpen={isOpen} toggleSidebar={toggleSidebar} />} />
-        <Route path="/complex" element={<Complex isOpen={isOpen} toggleSidebar={toggleSidebar} complexFrequencyList={complexFrequencyList} complex_options={complex_options} />} />
+        <Route path='/token' element={<Token />} />
+        <Route path="/dashboard" element={<Home isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries} complexFrequencyList={complex_chart_data} complex_options={complex_options} issueFrequencyList={issue_chart_data} issue_options={issue_options} roomFrequencyList={sortedRoomFrequency} />} />
+        <Route path="/complex" element={<Complex isOpen={isOpen} toggleSidebar={toggleSidebar} complexFrequencyList={complex_chart_data} complex_options={complex_options} />} />
         <Route path="/queries" element={<Queries isOpen={isOpen} toggleSidebar={toggleSidebar} queries={queries} />} />
-        <Route path="/issue" element={<Issue isOpen={isOpen} toggleSidebar={toggleSidebar} issueFrequencyList={issueFrequencyList} issue_options={issue_options} />} />
+        <Route path="/issue" element={<Issue isOpen={isOpen} toggleSidebar={toggleSidebar} issueFrequencyList={issue_chart_data} issue_options={issue_options} />} />
         <Route path="/room" element={<Room isOpen={isOpen} toggleSidebar={toggleSidebar} roomFrequencyList={sortedRoomFrequency} />} />
       </Routes>
     </BrowserRouter>
