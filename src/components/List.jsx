@@ -80,7 +80,7 @@ async function updateStatus(id, status) {
 
         if (response.status === 200) {
             alert("Status updated successfully.");
-            // window.location.reload();
+            window.location.reload();
         }
     } catch (error) {
         console.log('Error:', error);

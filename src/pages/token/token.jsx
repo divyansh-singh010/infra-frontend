@@ -14,9 +14,11 @@ const Token = () => {
         })
             .then(res => {
                 localStorage.setItem('user', JSON.stringify(res.data.profile));
-                localStorage.setItem('token', token);
+                localStorage.setItem('access_token', token);
                 setVerified(true);
-                window.location.href = '/dashboard';
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 3000);
             })
             .catch(err => {
                 console.log(err);
@@ -27,8 +29,14 @@ const Token = () => {
     }, [token]);
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20vh', flexDirection: 'column' }}>
-            {!verified && <><h1 style={{ fontSize: '2em' }}>You are not authorised!</h1><h2 style={{ fontSize: '1.5rem' }}>Redirecting to home...</h2>
-            </>}
+            {verified ?
+                <h2 style={{ fontSize: '1.5rem' }}>Redirecting to Dashboard...</h2>
+                :
+                <>
+                    <h1 style={{ fontSize: '2em' }}>You are not authorised!</h1>
+                    <h2 style={{ fontSize: '1.5rem' }}>Redirecting to home...</h2>
+                </>
+            }
         </div>
     );
 }
