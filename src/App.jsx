@@ -2,12 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import axios from "axios";
 import { DOMAIN } from "../domain"
 import Home from './pages/home/Home'
-import Token from './pages/token/Token'
+import Token from './pages/token/token'
 import Complex from './pages/home/Complex'
 import Queries from './pages/home/Queries'
 import Issue from './pages/home/Issue'
 import Room from './pages/home/Room'
-import Login from './pages/login/Login'
+import Login from './pages/login/login'
 import { useEffect, useState } from "react";
 
 function App() {

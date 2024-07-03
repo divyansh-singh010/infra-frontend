@@ -1,1 +1,1 @@
-export const DOMAIN = "https://infraportal.iitd.ac.in/api/";
+export const DOMAIN = "http://10.10.12.252:8029/api/";

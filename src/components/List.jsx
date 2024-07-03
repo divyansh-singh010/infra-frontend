@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DOMAIN } from "../../domain";
 
 export default function List({ queries }) {
     return (
@@ -14,7 +15,7 @@ export default function List({ queries }) {
                         <button
                             onClick={async () => {
                                 try {
-                                    const res = await axios.get("https://infraportal.iitd.ac.in/api/download/", {
+                                    const res = await axios.get(`${DOMAIN}download/`, {
                                         headers: {
                                             Authorization: `Bearer ${localStorage.getItem("access_token")}`
                                         },
@@ -68,7 +69,7 @@ export default function List({ queries }) {
 async function updateStatus(id, status) {
     try {
         console.log(`Updating status for ID: ${id} to status: ${status}`);
-        const response = await axios.put("https://infraportal.iitd.ac.in/api/update_status/", {
+        const response = await axios.put(`${DOMAIN}update_status/`, {
             id: id,
             status: 'Completed'
         }, {

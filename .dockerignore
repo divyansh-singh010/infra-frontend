@@ -1,0 +1,30 @@
+# Ignore Git related files and directories
+.git
+.gitignore
+
+# Ignore Node.js modules
+node_modules
+
+# Ignore development and build artifacts
+.env
+.vscode
+.idea
+.npmrc
+.yarnrc
+.yarn
+yarn-error.log
+yarn.lock
+package-lock.json
+coverage
+.nyc_output
+
+# Ignore editor specific files
+*.log
+*.swp
+.DS_Store
+
+# Ignore Docker specific files (if any)
+Dockerfile*
+.dockerignore
+
+# Add any other files or directories to ignore as needed
