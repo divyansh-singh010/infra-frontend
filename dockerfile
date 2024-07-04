@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package.json ./
 COPY package-lock.json* ./
-
+RUN npm install -g vite@5.3.3
 RUN npm cache clean --force
 RUN npm install
 
@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 4173
 
-CMD ["npx", "vite", "preview"]
+CMD ["vite", "preview"]
